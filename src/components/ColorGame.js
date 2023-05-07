@@ -82,39 +82,43 @@ const ColorGame = () => {
         id="stripe"
         className="bg-white h-8 text-center text-black 2xl:hidden block"
       >
-        <button
-          id="reset"
-          className="outline-none text-color-game font-Raleway uppercase text-sm md:text-2xl bg-white h-full mx-1 transition-all hover:bg-primary hover:text-white px-2"
-          onClick={reset}
-        >
-          New Colors
-        </button>
-        <span
-          id="message"
-          className="uppercase text-color-game text-sm md:text-2xl inline-block w-1/5"
-        >
-          {message}
-        </span>
-        <button
-          className={`mode outline-none font-Raleway uppercase text-sm md:text-2xl h-full px-2 transition-all ${
-            numSquares === 3
-              ? "text-white bg-primary"
-              : "text-color-game bg-white hover:bg-primary hover:text-white"
-          }`}
-          onClick={() => setNumSquares(3)}
-        >
-          Easy
-        </button>
-        <button
-          className={`mode outline-none font-Raleway uppercase text-sm md:text-2xl h-full px-2 transition-all ${
-            numSquares === 6
-              ? "text-white bg-primary"
-              : "text-color-game bg-white hover:bg-primary hover:text-white"
-          }`}
-          onClick={() => setNumSquares(6)}
-        >
-          Hard
-        </button>
+        <div className="flex justify-between items-center max-w-[1000px] mx-auto">
+          <button
+            id="reset"
+            className="outline-none text-color-game font-Raleway uppercase text-sm md:text-2xl bg-white h-full mx-1 transition-all hover:bg-primary hover:text-white px-2 md:rounded-none rounded-lg"
+            onClick={reset}
+          >
+            New Colors
+          </button>
+          <span
+            id="message"
+            className="uppercase text-color-game text-sm md:text-2xl inline-block w-1/5"
+          >
+            {message}
+          </span>
+          <div className="space-x-4">
+            <button
+              className={`mode outline-none font-Raleway uppercase text-sm md:text-2xl h-full px-2 transition-all ${
+                numSquares === 3
+                  ? "text-white bg-primary md:rounded-none rounded-md"
+                  : "text-color-game bg-white hover:bg-primary hover:text-white md:rounded-none rounded-lg"
+              }`}
+              onClick={() => setNumSquares(3)}
+            >
+              Easy
+            </button>
+            <button
+              className={`mode outline-none font-Raleway uppercase text-sm md:text-2xl h-full px-2 transition-all ${
+                numSquares === 6
+                  ? "text-white bg-primary md:rounded-none rounded-md"
+                  : "text-color-game bg-white hover:bg-primary hover:text-white md:rounded-none rounded-lg"
+              }`}
+              onClick={() => setNumSquares(6)}
+            >
+              Hard
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="flex justify-center w-full">
