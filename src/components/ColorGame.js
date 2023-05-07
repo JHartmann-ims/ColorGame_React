@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import logo from "../assets/amongus.png";
 
 const ColorGame = () => {
   const [numSquares, setNumSquares] = useState(6);
   const [colors, setColors] = useState([]);
   const [pickedColor, setPickedColor] = useState("");
   const [squares, setSquares] = useState([]);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("Hello there!");
 
   useEffect(() => {
     init();
@@ -26,10 +27,10 @@ const ColorGame = () => {
 
   const handleSquareClick = (clickedColor) => {
     if (clickedColor === pickedColor) {
-      setMessage("Correct");
+      setMessage("Correct!");
       changeColors(pickedColor);
     } else {
-      setMessage("Try again");
+      setMessage("Try again!");
       const newSquares = squares.map((square) =>
         square === clickedColor ? "#232323" : square
       );
@@ -67,17 +68,20 @@ const ColorGame = () => {
 
   return (
     <div className="text-center">
-      <h1 className="text-white bg-color-game text-7xl uppercase py-2">
-        The Color{" "}
+        <div className="py-10 bg-neutral border-b-2 border-primary shadow-lg 2xl:block hidden">
+            <h1 className="text-primary text-7xl font-bold uppercase">Twäwis</h1>
+        </div>
+        <h1 className="text-white 2xl:hidden block bg-primary text-6xl uppercase py-2">
+        The Color
         <span id="color-display" className="block text-4xl">
           {pickedColor}
-        </span>{" "}
+        </span>
         Guessing Game
       </h1>
-      <div id="stripe" className="bg-white h-8 text-center text-black">
+      <div id="stripe" className="bg-white h-8 text-center text-black 2xl:hidden block">
         <button
           id="reset"
-          className="outline-none text-color-game font-Raleway uppercase text-2xl bg-white h-full mx-1 transition-all hover:bg-color-game hover:text-white"
+          className="outline-none text-color-game font-Raleway uppercase text-2xl bg-white h-full mx-1 transition-all hover:bg-primary hover:text-white"
           onClick={reset}
         >
           New Colors
@@ -89,39 +93,79 @@ const ColorGame = () => {
           {message}
         </span>
         <button
-          className={`mode outline-none font-Raleway uppercase text-2xl h-full mx-1 transition-all ${
+          className={`mode outline-none font-Raleway uppercase text-2xl h-full px-2 transition-all ${
             numSquares === 3
-              ? "text-white bg-color-game"
-              : "text-color-game bg-white hover:bg-color-game hover:text-white"
+              ? "text-white bg-primary"
+              : "text-color-game bg-white hover:bg-primary hover:text-white"
           }`}
           onClick={() => setNumSquares(3)}
         >
           Easy
         </button>
         <button
-          className={`mode outline-none font-Raleway uppercase text-2xl h-full mx-1 transition-all ${
+          className={`mode outline-none font-Raleway uppercase text-2xl h-full px-2 transition-all ${
             numSquares === 6
-              ? "text-white bg-color-game"
-              : "text-color-game bg-white hover:bg-color-game hover:text-white"
+              ? "text-white bg-primary"
+              : "text-color-game bg-white hover:bg-primary hover:text-white"
           }`}
           onClick={() => setNumSquares(6)}
         >
           Hard
         </button>
       </div>
-      <div className="w-full">
-        <div
-          id="container"
-          className="max-w-[1200px] mx-auto pt-5 flex justify-center flex-wrap"
-        >
-          {squares.map((color, index) => (
+      <div className="flex justify-center w-full">
+        <div className="w-full max-w-[1600px] 2xl:grid gap-2 grid-cols-2 grid-rows-1 p-5 pt-7">
+          <div className="float-right text-left 2xl:block hidden">
+            <div className="p-2 border-2 rounded-lg text-center">
+              <h1 className="uppercase text-5xl">
+                The Color Guessing Game
+              </h1>
+            </div>
+            <div className="pt-5 inline-flex items-center">
+              <div className="inline-flex items-center pr-5">
+                <img src={logo} className="h-24 mx-5" />
+                <div>
+                  <h3 className="font-bold text-2xl">{message}</h3>
+                  <p>Look at the given RGB and guess the color!</p>
+                </div>
+              </div>
+              <div className="pl-5 border-l-2">
+                <p className="uppercase text-3xl">{pickedColor}</p>
+              </div>
+            </div>
+            <div className="inline-flex justify-between items-center pt-2 w-full">
+              <button className="btn w-[40%]" onClick={reset}>new colors</button>
+              <div className="btn-group btn-group-horizontal">
+                <button
+                  className={`btn ${numSquares === 3 ? "btn-active" : "btn"}`}
+                  onClick={() => setNumSquares(3)}
+                >
+                  Easy
+                </button>
+                <button
+                  className={`btn ${numSquares === 6 ? "btn-active" : "btn"}`}
+                  onClick={() => setNumSquares(6)}
+                >
+                  Hard
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="w-full">
             <div
-              key={index}
-              className="square w-1/3 bg-purple h-32 pb-1/3 inline-block mx-1 my-1 transition duration-500 ease-in-out transform hover:scale-105 rounded-2xl"
-              style={{ backgroundColor: color }}
-              onClick={() => handleSquareClick(color)}
-            ></div>
-          ))}
+              id="container"
+              className="max-w-[1200px] mx-auto flex justify-center flex-wrap"
+            >
+              {squares.map((color, index) => (
+                <div
+                  key={index}
+                  className="square w-1/3 bg-purple h-32 pb-1/3 inline-block mx-1 my-1 transition duration-300 ease-in-out transform hover:scale-105 rounded-2xl"
+                  style={{ backgroundColor: color }}
+                  onClick={() => handleSquareClick(color)}
+                ></div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
