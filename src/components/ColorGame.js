@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import logo from "../assets/amongus.png";
+import Confetti from "react-confetti";
 
 const ColorGame = () => {
   const [numSquares, setNumSquares] = useState(6);
@@ -7,6 +8,19 @@ const ColorGame = () => {
   const [pickedColor, setPickedColor] = useState("");
   const [squares, setSquares] = useState([]);
   const [message, setMessage] = useState("Hello there!");
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [windowDimension, setWindowDimension] = useState({width: window.innerWidth, height: window.innerHeight});
+
+  const detectSize = () => {
+    setWindowDimension({width: window.innerWidth, height: window.innerHeight})
+  }
+
+  useEffect(() => {
+    window.addEventListener("resize", detectSize);
+    return() => {
+      window.removeEventListener("resize", detectSize);
+    }
+  }, [windowDimension]);
 
   useEffect(() => {
     init();
@@ -18,17 +32,20 @@ const ColorGame = () => {
     const color = chooseColor(newColors);
     setPickedColor(color);
     setSquares(newColors);
+    setShowConfetti(false);
   };
 
   const reset = () => {
     init();
     setMessage("");
+    setShowConfetti(false);
   };
 
   const handleSquareClick = (clickedColor) => {
     if (clickedColor === pickedColor) {
       setMessage("Correct!");
       changeColors(pickedColor);
+      setShowConfetti(true);
     } else {
       setMessage("Try again!");
       const newSquares = squares.map((square) =>
@@ -68,6 +85,10 @@ const ColorGame = () => {
 
   return (
     <div className="text-center h-screen sm:h-">
+      {showConfetti && <Confetti 
+        width={windowDimension.width}
+        height={windowDimension.height}
+      />}
       <div className="py-10 bg-neutral border-b-2 border-primary shadow-lg 2xl:block hidden">
         <h1 className="text-primary text-7xl font-bold uppercase">Twäwis</h1>
       </div>
@@ -82,39 +103,43 @@ const ColorGame = () => {
         id="stripe"
         className="bg-white h-8 text-center text-black 2xl:hidden block"
       >
-        <button
-          id="reset"
-          className="outline-none text-color-game font-Raleway uppercase text-sm md:text-2xl bg-white h-full mx-1 transition-all hover:bg-primary hover:text-white px-2"
-          onClick={reset}
-        >
-          New Colors
-        </button>
-        <span
-          id="message"
-          className="uppercase text-color-game text-sm md:text-2xl inline-block w-1/5"
-        >
-          {message}
-        </span>
-        <button
-          className={`mode outline-none font-Raleway uppercase text-sm md:text-2xl h-full px-2 transition-all ${
-            numSquares === 3
-              ? "text-white bg-primary"
-              : "text-color-game bg-white hover:bg-primary hover:text-white"
-          }`}
-          onClick={() => setNumSquares(3)}
-        >
-          Easy
-        </button>
-        <button
-          className={`mode outline-none font-Raleway uppercase text-sm md:text-2xl h-full px-2 transition-all ${
-            numSquares === 6
-              ? "text-white bg-primary"
-              : "text-color-game bg-white hover:bg-primary hover:text-white"
-          }`}
-          onClick={() => setNumSquares(6)}
-        >
-          Hard
-        </button>
+        <div className="flex justify-between items-center max-w-[1000px] mx-auto">
+          <button
+            id="reset"
+            className="outline-none text-color-game font-Raleway uppercase text-sm md:text-2xl bg-white h-full mx-1 transition-all hover:bg-primary hover:text-white px-2 md:rounded-none rounded-lg"
+            onClick={reset}
+          >
+            New Colors
+          </button>
+          <span
+            id="message"
+            className="uppercase text-color-game text-sm md:text-2xl inline-block w-1/5"
+          >
+            {message}
+          </span>
+          <div className="space-x-4">
+            <button
+              className={`mode outline-none font-Raleway uppercase text-sm md:text-2xl h-full px-2 transition-all ${
+                numSquares === 3
+                  ? "text-white bg-primary md:rounded-none rounded-md"
+                  : "text-color-game bg-white hover:bg-primary hover:text-white md:rounded-none rounded-lg"
+              }`}
+              onClick={() => setNumSquares(3)}
+            >
+              Easy
+            </button>
+            <button
+              className={`mode outline-none font-Raleway uppercase text-sm md:text-2xl h-full px-2 transition-all ${
+                numSquares === 6
+                  ? "text-white bg-primary md:rounded-none rounded-md"
+                  : "text-color-game bg-white hover:bg-primary hover:text-white md:rounded-none rounded-lg"
+              }`}
+              onClick={() => setNumSquares(6)}
+            >
+              Hard
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="flex justify-center w-full">
