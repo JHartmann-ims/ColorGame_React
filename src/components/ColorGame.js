@@ -67,7 +67,7 @@ const ColorGame = () => {
   // Other functions from the given code
 
   return (
-    <div className="text-center">
+    <div className="text-center h-screen sm:h-">
       <div className="py-10 bg-neutral border-b-2 border-primary shadow-lg 2xl:block hidden">
         <h1 className="text-primary text-7xl font-bold uppercase">Twäwis</h1>
       </div>
@@ -163,7 +163,7 @@ const ColorGame = () => {
               {squares.map((color, index) => (
                 <div
                   key={index}
-                  className="square w-1/3 bg-purple h-32 pb-1/3 inline-block mx-1 my-1 transition duration-300 ease-in-out transform hover:scale-105 rounded-2xl"
+                  className="square w-1/3 bg-purple h-32 pb-1/3 inline-block mx-1 my-1 transition duration-300 ease-in-out transform hover:scale-105 rounded-2xl shadow-md"
                   style={{ backgroundColor: color }}
                   onClick={() => handleSquareClick(color)}
                 ></div>
