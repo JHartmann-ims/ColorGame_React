@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import logo from "../assets/amongus.png";
+import Confetti from "react-confetti";
 
 const ColorGame = () => {
   const [numSquares, setNumSquares] = useState(6);
@@ -7,6 +8,19 @@ const ColorGame = () => {
   const [pickedColor, setPickedColor] = useState("");
   const [squares, setSquares] = useState([]);
   const [message, setMessage] = useState("Hello there!");
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [windowDimension, setWindowDimension] = useState({width: window.innerWidth, height: window.innerHeight});
+
+  const detectSize = () => {
+    setWindowDimension({width: window.innerWidth, height: window.innerHeight})
+  }
+
+  useEffect(() => {
+    window.addEventListener("resize", detectSize);
+    return() => {
+      window.removeEventListener("resize", detectSize);
+    }
+  }, [windowDimension]);
 
   useEffect(() => {
     init();
@@ -18,17 +32,20 @@ const ColorGame = () => {
     const color = chooseColor(newColors);
     setPickedColor(color);
     setSquares(newColors);
+    setShowConfetti(false);
   };
 
   const reset = () => {
     init();
     setMessage("");
+    setShowConfetti(false);
   };
 
   const handleSquareClick = (clickedColor) => {
     if (clickedColor === pickedColor) {
       setMessage("Correct!");
       changeColors(pickedColor);
+      setShowConfetti(true);
     } else {
       setMessage("Try again!");
       const newSquares = squares.map((square) =>
@@ -68,6 +85,10 @@ const ColorGame = () => {
 
   return (
     <div className="text-center h-screen sm:h-">
+      {showConfetti && <Confetti 
+        width={windowDimension.width}
+        height={windowDimension.height}
+      />}
       <div className="py-10 bg-neutral border-b-2 border-primary shadow-lg 2xl:block hidden">
         <h1 className="text-primary text-7xl font-bold uppercase">Twäwis</h1>
       </div>
