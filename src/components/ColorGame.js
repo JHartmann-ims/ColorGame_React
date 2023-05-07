@@ -9,17 +9,23 @@ const ColorGame = () => {
   const [squares, setSquares] = useState([]);
   const [message, setMessage] = useState("Hello there!");
   const [showConfetti, setShowConfetti] = useState(false);
-  const [windowDimension, setWindowDimension] = useState({width: window.innerWidth, height: window.innerHeight});
+  const [windowDimension, setWindowDimension] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
 
   const detectSize = () => {
-    setWindowDimension({width: window.innerWidth, height: window.innerHeight})
-  }
+    setWindowDimension({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  };
 
   useEffect(() => {
     window.addEventListener("resize", detectSize);
-    return() => {
+    return () => {
       window.removeEventListener("resize", detectSize);
-    }
+    };
   }, [windowDimension]);
 
   useEffect(() => {
@@ -85,14 +91,16 @@ const ColorGame = () => {
 
   return (
     <div className="text-center h-screen sm:h-">
-      {showConfetti && <Confetti 
-        width={windowDimension.width}
-        height={windowDimension.height}
-      />}
+      {showConfetti && (
+        <Confetti
+          width={windowDimension.width}
+          height={windowDimension.height}
+        />
+      )}
       <div className="py-10 bg-neutral border-b-2 border-primary shadow-lg 2xl:block hidden">
         <h1 className="text-primary text-7xl font-bold uppercase">Twäwis</h1>
       </div>
-      <h1 className="text-white 2xl:hidden md:text-6xl block bg-primary text-3xl uppercase py-2">
+      <h1 className="text-primary 2xl:hidden md:text-6xl block bg-neutral text-3xl uppercase py-2">
         The Color
         <span id="color-display" className="block text-4xl">
           {pickedColor}
@@ -194,6 +202,23 @@ const ColorGame = () => {
                 ></div>
               ))}
             </div>
+          </div>
+          <div className="w-full pt-5 2xl:hidden block">
+            {/* The button to open modal */}
+            <label htmlFor="my-modal-4" className="btn btn-circle bg-primary">
+              <p className="text-lg">?</p>
+            </label>
+
+            {/* Put this part before </body> tag */}
+            <input type="checkbox" id="my-modal-4" className="modal-toggle" />
+            <label htmlFor="my-modal-4" className="modal cursor-pointer">
+              <label className="modal-box relative" htmlFor="">
+                <h3 className="text-lg font-bold">How do I play?</h3>
+                <p className="py-4">
+                  Look at the given RGB at the top and guess the color!
+                </p>
+              </label>
+            </label>
           </div>
         </div>
       </div>
